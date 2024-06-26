@@ -382,12 +382,11 @@
                         } else {
                             currentSelection = [obj];
                         }
-                        
+
                         highlight();
 
                         vscode.postMessage({
                             command: 'onClick', value: {
-                                // I guess: TODO: report which node was clicked
                                 node: DomToJsonAttribs(this),
                             }
                         })
@@ -395,7 +394,6 @@
                     gv.nodes().dblclick(function () {
                         vscode.postMessage({
                             command: 'onDblClick', value: {
-                                // I guess: TODO: report which node was clicked, to show the code?
                                 node: DomToJsonAttribs(this),
                             }
                         })
