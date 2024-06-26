@@ -433,36 +433,33 @@
     GraphvizSvg.prototype.clustersByName = function () {
       return this._clustersByName
     }
-  
+
     GraphvizSvg.prototype.linkedTo = function (node, includeEdges) {
       var $retval = $()
       this.findLinked(node, includeEdges, function (nodeName, edgeName) {
         var other = null;
-
-        const connection = edgeName.split("->");
-        if(connection.length>1 && (connection[1] === nodeName || connection[1].startsWith(nodeName+":"))) {
-          return connection[0].split(":")[0];
+        var match = '->' + nodeName
+        if (edgeName.endsWith(match)) {
+          other = edgeName.substring(0, edgeName.length - match.length);
         }
-
         return other;
       }, $retval)
       return $retval
     }
-  
+
     GraphvizSvg.prototype.linkedFrom = function (node, includeEdges) {
       var $retval = $()
       this.findLinked(node, includeEdges, function (nodeName, edgeName) {
         var other = null;
-        
-        const connection = edgeName.split("->");
-        if(connection.length>1 && (connection[0] === nodeName || connection[0].startsWith(nodeName+":"))) {
-          return connection[1].split(":")[0];
+        var match = nodeName + '->'
+        if (edgeName.startsWith(match)) {
+          other = edgeName.substring(match.length);
         }
         return other;
       }, $retval)
       return $retval
     }
-  
+
     GraphvizSvg.prototype.linked = function (node, includeEdges) {
       var $retval = $()
       this.findLinked(node, includeEdges, function (nodeName, edgeName) {
@@ -560,5 +557,4 @@
       $.fn.graphviz = old
       return this
     }
-  
   }(jQuery)
